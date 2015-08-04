@@ -1,2 +1,3 @@
 # santoker
-santoker admin console
+santoker admin console yes
+
