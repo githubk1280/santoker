@@ -2,19 +2,19 @@ package com.nio.learning.simple;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by lefu on 15/8/9.
  * Description:
  */
 public class TimeServer implements Runnable {
+    AtomicInteger count = new AtomicInteger(0);
     final ServerSocketChannel serverSocketChannel;
     final Selector selector;
 
@@ -37,15 +37,16 @@ public class TimeServer implements Runnable {
                 while (iterator.hasNext()) {
                     SelectionKey key = iterator.next();
                     if (key.isAcceptable()) {
-                        System.out.println("------------" + key.channel() + " isAcceptable");
-                        new Acceptor(SelectionKey.OP_ACCEPT, key).run();
+                        System.out.println("------------" + key.channel() + " ------------isAcceptable");
+                        new Acceptor(SelectionKey.OP_ACCEPT, key, count).run();
                     } else if (key.isReadable()) {
-                        System.out.println("------------ " + key.channel() + " isReadable");
-                        new Acceptor(SelectionKey.OP_READ, key).run();
+                        System.out.println("------------ " + key.channel() + " ------------isReadable");
+                        new Acceptor(SelectionKey.OP_READ, key, count).run();
                     } else if (key.isConnectable()) {
-                        System.out.println("------------ isConnectable");
+                        System.out.println("------------  " + key.channel() + " isConnectable");
                     } else if (key.isWritable()) {
-                        System.out.println("------------ isWritable");
+                        System.out.println("------------ " + key.channel() + " ------------isWritable");
+                        new Acceptor(SelectionKey.OP_WRITE, key, count).run();
                     }
                     iterator.remove();
                 }
@@ -55,67 +56,5 @@ public class TimeServer implements Runnable {
         }
     }
 
-    class Acceptor implements Runnable {
-        final int op;
-        final SelectionKey key;
-
-        Acceptor(int op, SelectionKey key) {
-            this.op = op;
-            this.key = key;
-        }
-
-        public void run() {
-            if (SelectionKey.OP_ACCEPT == op) {
-                try {
-                    accept();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else if (SelectionKey.OP_READ == op) {
-                try {
-                    read();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else if (SelectionKey.OP_CONNECT == op) {
-                connect();
-            } else if (SelectionKey.OP_WRITE == op) {
-                write();
-            }
-        }
-
-        private void read() throws IOException {
-            printContent();
-        }
-
-        private void write() {
-
-        }
-
-        private void connect() {
-
-        }
-
-        private void accept() throws IOException {
-            ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
-            SocketChannel c = serverSocketChannel.accept();
-            c.configureBlocking(false);
-            c.write(ByteBuffer.wrap("hello from server".getBytes()));
-            c.register(key.selector(), SelectionKey.OP_READ);
-        }
-
-        private void printContent() throws IOException {
-            SocketChannel c = (SocketChannel) key.channel();
-            ByteBuffer buffer = ByteBuffer.allocate(128);
-            int readBytes = c.read(buffer);
-            System.out.println("read " + readBytes);
-            if (-1 == readBytes) {
-                c.close();
-                key.cancel();
-            }
-            byte[] values = buffer.array();
-            System.out.println("#########Server received :[" + new String(values).trim()+"]");
-        }
-    }
 
 }

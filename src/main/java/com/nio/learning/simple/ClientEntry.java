@@ -8,7 +8,19 @@ import java.io.IOException;
  */
 public class ClientEntry {
 
-    public static void main (String args[]) throws IOException {
-        new TimeClient("localhost",8080).run();
+    public static void main(String args[]) throws IOException, InterruptedException {
+        for (int i = 0; i < 1; i++) {
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        new TimeClient("localhost", 8080).run();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            ).start();
+        }
     }
 }
