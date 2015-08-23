@@ -209,6 +209,14 @@
             <artifactId>kafka-clients</artifactId>
             <version>0.8.2.0</version>
         </dependency>
+
+        <!-- RxJava -->
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+
     </dependencies>
     <repositories>
         <!-- For testing against latest Spring snapshots -->
