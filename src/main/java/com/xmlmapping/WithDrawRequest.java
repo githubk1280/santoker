@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @XmlRootElement(name = "request")
 public class WithDrawRequest {
     /**
-     * 理财平台号 0603
+     * 理财平台号
      */
     private String finaBranchID;
 

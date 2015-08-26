@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @XStreamAlias("request")
 public class WithDrawRequest2 {
     /**
-     * 理财平台号 0603
+     * 理财平台号
      */
     private String finaBranchID;
 
