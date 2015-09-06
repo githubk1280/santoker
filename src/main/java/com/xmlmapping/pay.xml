@@ -1,0 +1,42 @@
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.framework.platform">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:request soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <xml xsi:type="soapenc:string" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+<![CDATA[ 
+ <Service><Header>
+    <ServiceCode>FINA9001</ServiceCode>
+    <ChannelId>603</ChannelId>
+    <Version>1.0</Version>
+    <RequestTime>20150825083606587</RequestTime>
+    <ExternalReference>523708360501</ExternalReference>
+    <RequestBranchCode>013601</RequestBranchCode>
+    <RequestOperatorId>0136907</RequestOperatorId>
+    <RequestOperatorType>1</RequestOperatorType>
+    <BankNoteBoxID>0136907</BankNoteBoxID>
+    <AuthorizerID></AuthorizerID>
+    <TradeDate>20150827</TradeDate>
+    <TermType>11111</TermType>
+    <TermNo>00001076</TermNo>
+    <RequestType>0</RequestType>
+    <Encrypt>0</Encrypt>
+</Header><Body>
+    <Request>
+      <FinaBranchID>0603</FinaBranchID>
+      <FinaBranchName>021</FinaBranchName>
+      <Amount>50</Amount>
+      <BankName>csyh</BankName>
+      <BankID>10010</BankID>
+      <AcctNo>62236873108368521</AcctNo>
+      <AcctName>00001076</AcctName>
+      <IfOnTime>0</IfOnTime>
+      <CurrCode>01</CurrCode>
+      <PayType>0</PayType>
+      <VirtualAcct>62236873108368512</VirtualAcct>
+    </Request>
+  </Body></Service>
+   ]]>
+</xml>
+      </ser:request>
+   </soapenv:Body>
+</soapenv:Envelope>
